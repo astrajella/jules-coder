@@ -11,3 +11,8 @@ fallbacks:
   coder: google/gemini-flash-1.5
   critic: google/gemini-flash-1.5
   context: google/gemini-flash-1.5
+
+embedding_models:
+  default: voyage-3.5
+  large: voyage-3-large
+  code: voyage-code-3
