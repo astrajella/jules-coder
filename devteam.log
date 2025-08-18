@@ -251,3 +251,11 @@ openai.APIStatusError: Error code: 402 - {'error': {'message': 'This request req
 2025-08-18 16:54:52,442 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
 2025-08-18 16:54:52,727 - INFO - [rag-test-session-mocked] Critic approved the code for adder.py.
 2025-08-18 16:55:32,729 - INFO - Build process started for session: rag-test-session-mocked
+2025-08-18 21:29:13,847 - INFO - [mock-test] Starting build with Instructor for: Create a hello world script.
+2025-08-18 21:29:33,869 - INFO - [mock-test] Calling Supervisor...
+2025-08-18 21:29:33,869 - INFO - [mock-test] Refined goal: Create a simple hello world python script.
+2025-08-18 21:29:53,891 - INFO - [mock-test] Calling Planner...
+2025-08-18 21:29:53,892 - INFO - [mock-test] Plan: Create a single python file that prints 'Hello, World!'
+2025-08-18 21:30:13,913 - INFO - [mock-test] Executing instruction for: hello_world.py
+2025-08-18 21:30:13,913 - INFO - [mock-test] Calling Critic for hello_world.py...
+2025-08-18 21:30:13,914 - INFO - [mock-test] Critic approved the code for hello_world.py.

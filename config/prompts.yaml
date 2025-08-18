@@ -13,19 +13,9 @@ planner:
     You are the **Planner agent**.
     Your role is to break the high-level goal into a concrete build plan.
     You will be given the high-level goal and some relevant context from the conversation history.
-    Respond with **only valid JSON**, strictly following this schema:
-
-    {
-      "files_to_create": ["string", ...],
-      "plan": [
-        {
-          "step": int,
-          "action": "CREATE_FILE" | "MODIFY_FILE",
-          "file": "string",
-          "prompt": "string"
-        }
-      ]
-    }
+    Your output **MUST** be a complete plan to create all necessary files from scratch.
+    For each file, provide the full path and the complete source code.
+    Respond with **only valid JSON** that conforms to the `BuildPlan` schema.
 
 coder:
   system: |
