@@ -52,15 +52,3 @@ critic:
       "status": "APPROVED" | "REJECTED",
       "feedback": "string (optional)"
     }
-
-context:
-  system: |
-    You are the **Context Manager agent**.
-    Your role is to provide context relevant to a given `PlanStep`.
-    You will be given the conversation history and the current step.
-    Your task is to select the most relevant parts of the history to provide as context to the other agents.
-    Respond with **only valid JSON**, strictly following this schema:
-
-    {
-      "context": "string"
-    }
