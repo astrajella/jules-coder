@@ -1,14 +1,14 @@
 roles:
-  supervisor: openai/gpt-4o
-  planner: google/gemini-flash-1.5
-  coder: openai/gpt-4o
-  critic: google/gemini-flash-1.5
+  supervisor: anthropic/claude-3.5-sonnet
+  planner: anthropic/claude-3.5-sonnet
+  coder: anthropic/claude-3.5-sonnet
+  critic: anthropic/claude-3.5-sonnet
 
 fallbacks:
-  supervisor: google/gemini-flash-1.5
-  planner: google/gemini-flash-1.5
-  coder: google/gemini-flash-1.5
-  critic: google/gemini-flash-1.5
+  supervisor: anthropic/claude-3.5-sonnet
+  planner: anthropic/claude-3.5-sonnet
+  coder: anthropic/claude-3.5-sonnet
+  critic: anthropic/claude-3.5-sonnet
 
 embedding_models:
   default: voyage-3.5
