@@ -75,3 +75,179 @@ openai.BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen2-72b-
 2025-08-18 16:13:11,172 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
 2025-08-18 16:13:11,321 - INFO - [test-session] Updated test.txt
 2025-08-18 16:13:11,322 - INFO - Build process started for session: test-session
+2025-08-18 16:40:37,072 - INFO - Received build request: {'prompt': "Create a python script that defines a function called 'add' that takes two numbers and returns their sum. Then, call the function with the numbers 5 and 10 and print the result.", 'session': 'rag-test-session'}
+2025-08-18 16:40:37,079 - INFO - [rag-test-session] Starting build for: Create a python script that defines a function called 'add' that takes two numbers and returns their sum. Then, call the function with the numbers 5 and 10 and print the result.
+2025-08-18 16:40:37,288 - INFO - message='Voyage API response' path=https://api.voyageai.com/v1/embeddings processing_ms=None request_id=None response_code=200
+2025-08-18 16:40:37,290 - INFO - [rag-test-session] Calling Supervisor...
+2025-08-18 16:40:38,094 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-08-18 16:40:38,096 - ERROR - Error in start_build: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+Traceback (most recent call last):
+  File "/app/server.py", line 38, in start_build
+    await orch.run(prompt)
+  File "/app/devteam/orchestrator.py", line 30, in run
+    refined_goal = supervisor.run(
+                   ^^^^^^^^^^^^^^^
+  File "/app/devteam/agents/supervisor.py", line 11, in run
+    response = client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/openai/_utils/_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py", line 1150, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/openai/_base_client.py", line 1259, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/openai/_base_client.py", line 1047, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+2025-08-18 16:42:51,094 - INFO - Received build request: {'prompt': "Create a python script that defines a function called 'add' that takes two numbers and returns their sum. Then, call the function with the numbers 5 and 10 and print the result.", 'session': 'rag-test-session'}
+2025-08-18 16:42:51,102 - INFO - [rag-test-session] Starting build for: Create a python script that defines a function called 'add' that takes two numbers and returns their sum. Then, call the function with the numbers 5 and 10 and print the result.
+2025-08-18 16:42:51,260 - INFO - message='Voyage API response' path=https://api.voyageai.com/v1/embeddings processing_ms=None request_id=None response_code=200
+2025-08-18 16:42:51,262 - INFO - [rag-test-session] Calling Supervisor...
+2025-08-18 16:42:52,451 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:42:52,906 - INFO - [rag-test-session] Refined goal: Create a Python script to define and use a function for adding two numbers.
+2025-08-18 16:42:53,021 - INFO - message='Voyage API response' path=https://api.voyageai.com/v1/embeddings processing_ms=None request_id=None response_code=200
+2025-08-18 16:42:53,022 - INFO - [rag-test-session] Calling Planner...
+2025-08-18 16:42:53,143 - INFO - message='Voyage API response' path=https://api.voyageai.com/v1/embeddings processing_ms=None request_id=None response_code=200
+2025-08-18 16:42:53,853 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:42:54,495 - INFO - [rag-test-session] Plan: {'files_to_create': ['adder.py'], 'plan': [{'step': 1, 'action': 'CREATE_FILE', 'file': 'adder.py', 'prompt': 'Create a python file named adder.py with the following content:\n```python\ndef add(x, y):\n  return x + y\n\nresult = add(5, 10)\nprint(result)\n```'}]}
+2025-08-18 16:42:54,579 - INFO - message='Voyage API response' path=https://api.voyageai.com/v1/embeddings processing_ms=None request_id=None response_code=429
+2025-08-18 16:42:54,580 - INFO - error_message='You have not yet added your payment method in the billing page and will have reduced rate limits of 3 RPM and 10K TPM. To unlock our standard rate limits, please add a payment method in the billing page for the appropriate organization in the user dashboard (https://dashboard.voyageai.com/). Even with payment methods entered, the free tokens (200M tokens for Voyage series 3) will still apply. After adding a payment method, you should see your rate limits increase after several minutes. See our pricing docs (https://docs.voyageai.com/docs/pricing) for the free tokens for your model.' message='Voyage API error received'
+2025-08-18 16:42:54,581 - ERROR - Error in start_build: You have not yet added your payment method in the billing page and will have reduced rate limits of 3 RPM and 10K TPM. To unlock our standard rate limits, please add a payment method in the billing page for the appropriate organization in the user dashboard (https://dashboard.voyageai.com/). Even with payment methods entered, the free tokens (200M tokens for Voyage series 3) will still apply. After adding a payment method, you should see your rate limits increase after several minutes. See our pricing docs (https://docs.voyageai.com/docs/pricing) for the free tokens for your model.
+Traceback (most recent call last):
+  File "/app/server.py", line 38, in start_build
+    await orch.run(prompt)
+  File "/app/devteam/orchestrator.py", line 48, in run
+    await self.history.add_entry("planner", f"Created a plan: {plan}")
+  File "/app/devteam/rag.py", line 18, in add_entry
+    response = await self.client.embed([content], model="voyage-3.5", input_type=input_type)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/voyageai/client_async.py", line 68, in embed
+    async for attempt in self.retry_controller:
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/tenacity/asyncio/__init__.py", line 166, in __anext__
+    do = await self.iter(retry_state=self._retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/tenacity/asyncio/__init__.py", line 153, in iter
+    result = await action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/tenacity/_utils.py", line 99, in inner
+    return call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/tenacity/__init__.py", line 420, in exc_check
+    raise retry_exc.reraise()
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/tenacity/__init__.py", line 187, in reraise
+    raise self.last_attempt.result()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/voyageai/client_async.py", line 70, in embed
+    response = await voyageai.Embedding.acreate(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/voyageai/api_resources/embedding.py", line 43, in acreate
+    response = await super().acreate(*args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/voyageai/api_resources/api_resource.py", line 71, in acreate
+    response = await requestor.arequest(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/voyageai/api_resources/api_requestor.py", line 175, in arequest
+    resp = await self._interpret_async_response(result)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/voyageai/api_resources/api_requestor.py", line 424, in _interpret_async_response
+    return self._interpret_response_line(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/voyageai/api_resources/api_requestor.py", line 463, in _interpret_response_line
+    raise self.handle_error_response(rbody, rcode, resp.data, rheaders)
+voyageai.error.RateLimitError: You have not yet added your payment method in the billing page and will have reduced rate limits of 3 RPM and 10K TPM. To unlock our standard rate limits, please add a payment method in the billing page for the appropriate organization in the user dashboard (https://dashboard.voyageai.com/). Even with payment methods entered, the free tokens (200M tokens for Voyage series 3) will still apply. After adding a payment method, you should see your rate limits increase after several minutes. See our pricing docs (https://docs.voyageai.com/docs/pricing) for the free tokens for your model.
+2025-08-18 16:43:41,829 - INFO - Received build request: {'prompt': "Create a python script that defines a function called 'add' that takes two numbers and returns their sum. Then, call the function with the numbers 5 and 10 and print the result.", 'session': 'rag-test-session-mocked'}
+2025-08-18 16:43:41,830 - ERROR - Error in start_build: MockVoyageAIClient() takes no arguments
+Traceback (most recent call last):
+  File "/app/server.py", line 34, in start_build
+    orch = Orchestrator(session_id, voyage_api_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/devteam/orchestrator.py", line 12, in __init__
+    self.history = rag.ConversationHistory(voyage_api_key)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/devteam/rag.py", line 7, in __init__
+    self.client = voyageai.AsyncClient(api_key=voyage_api_key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MockVoyageAIClient() takes no arguments
+2025-08-18 16:44:23,039 - INFO - Received build request: {'prompt': "Create a python script that defines a function called 'add' that takes two numbers and returns their sum. Then, call the function with the numbers 5 and 10 and print the result.", 'session': 'rag-test-session-mocked'}
+2025-08-18 16:44:23,046 - INFO - [rag-test-session-mocked] Starting build for: Create a python script that defines a function called 'add' that takes two numbers and returns their sum. Then, call the function with the numbers 5 and 10 and print the result.
+2025-08-18 16:44:23,046 - INFO - [rag-test-session-mocked] Calling Supervisor...
+2025-08-18 16:44:24,378 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:44:24,893 - INFO - [rag-test-session-mocked] Refined goal: Create a Python script to define a function that adds two numbers, then call the function and print the result.
+2025-08-18 16:44:24,893 - INFO - [rag-test-session-mocked] Calling Planner...
+2025-08-18 16:44:25,429 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:44:26,009 - INFO - [rag-test-session-mocked] Plan: {'files_to_create': ['adder.py'], 'plan': [{'step': 1, 'action': 'CREATE_FILE', 'file': 'adder.py', 'prompt': "Create a python script that defines a function called 'add' that takes two numbers and returns their sum. Then, call the function with the numbers 5 and 10 and print the result."}]}
+2025-08-18 16:44:26,009 - INFO - [rag-test-session-mocked] Executing step: {'step': 1, 'action': 'CREATE_FILE', 'file': 'adder.py', 'prompt': "Create a python script that defines a function called 'add' that takes two numbers and returns their sum. Then, call the function with the numbers 5 and 10 and print the result."}
+2025-08-18 16:44:26,278 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2025-08-18 16:44:26,279 - ERROR - Error in start_build: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4096 tokens, but can only afford 3434. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_2vNW26xBDvAJp6ccDeVM6nVRYrF'}
+Traceback (most recent call last):
+  File "/app/server.py", line 38, in start_build
+    await orch.run(prompt)
+  File "/app/devteam/orchestrator.py", line 61, in run
+    new_content = coder.run(
+                  ^^^^^^^^^^
+  File "/app/devteam/agents/coder.py", line 16, in run
+    response = client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/openai/_utils/_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py", line 1150, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/openai/_base_client.py", line 1259, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/openai/_base_client.py", line 1047, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.APIStatusError: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4096 tokens, but can only afford 3434. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_2vNW26xBDvAJp6ccDeVM6nVRYrF'}
+2025-08-18 16:45:07,178 - INFO - Received build request: {'prompt': "Create a python script that defines a function called 'add' that takes two numbers and returns their sum. Then, call the function with the numbers 5 and 10 and print the result.", 'session': 'rag-test-session-mocked'}
+2025-08-18 16:45:07,183 - INFO - [rag-test-session-mocked] Starting build for: Create a python script that defines a function called 'add' that takes two numbers and returns their sum. Then, call the function with the numbers 5 and 10 and print the result.
+2025-08-18 16:45:07,183 - INFO - [rag-test-session-mocked] Calling Supervisor...
+2025-08-18 16:45:08,187 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:45:08,888 - INFO - [rag-test-session-mocked] Refined goal: Develop a Python script that defines a function to add two numbers and demonstrates its use with a specific example.
+2025-08-18 16:45:08,888 - INFO - [rag-test-session-mocked] Calling Planner...
+2025-08-18 16:45:09,245 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:45:10,294 - INFO - [rag-test-session-mocked] Plan: {'files_to_create': ['adder.py'], 'plan': [{'step': 1, 'action': 'CREATE_FILE', 'file': 'adder.py', 'prompt': 'Create a python file named `adder.py` with the following content:\n```python\ndef add(a, b):\n  """This function adds two numbers and returns their sum."""\n  return a + b\n\n# Example usage\nnum1 = 5\nnum2 = 10\nsum = add(num1, num2)\nprint(f"The sum of {num1} and {num2} is: {sum}")\n```'}]}
+2025-08-18 16:45:10,294 - INFO - [rag-test-session-mocked] Executing step: {'step': 1, 'action': 'CREATE_FILE', 'file': 'adder.py', 'prompt': 'Create a python file named `adder.py` with the following content:\n```python\ndef add(a, b):\n  """This function adds two numbers and returns their sum."""\n  return a + b\n\n# Example usage\nnum1 = 5\nnum2 = 10\nsum = add(num1, num2)\nprint(f"The sum of {num1} and {num2} is: {sum}")\n```'}
+2025-08-18 16:45:11,228 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:45:12,092 - INFO - [rag-test-session-mocked] Calling Critic...
+2025-08-18 16:45:12,568 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:45:12,901 - INFO - [rag-test-session-mocked] Critic approved the code for adder.py.
+2025-08-18 16:45:12,901 - INFO - Build process started for session: rag-test-session-mocked
+2025-08-18 16:47:16,363 - INFO - Received build request: {'prompt': "Create a python script that defines a function called 'add' that takes two numbers and returns their sum. Then, call the function with the numbers 5 and 10 and print the result.", 'session': 'rag-test-session-mocked'}
+2025-08-18 16:47:16,368 - INFO - [rag-test-session-mocked] Starting build for: Create a python script that defines a function called 'add' that takes two numbers and returns their sum. Then, call the function with the numbers 5 and 10 and print the result.
+2025-08-18 16:47:36,369 - INFO - [rag-test-session-mocked] Calling Supervisor...
+2025-08-18 16:47:37,600 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:47:38,051 - INFO - [rag-test-session-mocked] Refined goal: Write a Python script to define and use a function for adding two numbers.
+2025-08-18 16:47:58,052 - INFO - [rag-test-session-mocked] Calling Planner...
+2025-08-18 16:47:58,791 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:47:59,389 - INFO - [rag-test-session-mocked] Plan: {'files_to_create': ['add_numbers.py'], 'plan': [{'step': 1, 'action': 'CREATE_FILE', 'file': 'add_numbers.py', 'prompt': "Create a python script that defines a function called 'add' that takes two numbers and returns their sum. Then, call the function with the numbers 5 and 10 and print the result."}]}
+2025-08-18 16:48:19,389 - INFO - [rag-test-session-mocked] Executing step: {'step': 1, 'action': 'CREATE_FILE', 'file': 'add_numbers.py', 'prompt': "Create a python script that defines a function called 'add' that takes two numbers and returns their sum. Then, call the function with the numbers 5 and 10 and print the result."}
+2025-08-18 16:48:40,028 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:48:40,425 - INFO - [rag-test-session-mocked] Calling Critic...
+2025-08-18 16:48:41,396 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:48:41,449 - INFO - [rag-test-session-mocked] Critic approved the code for add_numbers.py.
+2025-08-18 16:49:21,451 - INFO - Build process started for session: rag-test-session-mocked
+2025-08-18 16:53:27,298 - INFO - Received build request: {'prompt': "Create a python script that defines a function called 'add' that takes two numbers and returns their sum. Then, call the function with the numbers 5 and 10 and print the result.", 'session': 'rag-test-session-mocked'}
+2025-08-18 16:53:27,304 - INFO - [rag-test-session-mocked] Starting build for: Create a python script that defines a function called 'add' that takes two numbers and returns their sum. Then, call the function with the numbers 5 and 10 and print the result.
+2025-08-18 16:53:47,305 - INFO - [rag-test-session-mocked] Calling Supervisor...
+2025-08-18 16:53:48,631 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:53:49,264 - INFO - [rag-test-session-mocked] Refined goal: Write a Python script to define and use an 'add' function that sums two numbers and prints the result.
+2025-08-18 16:54:09,265 - INFO - [rag-test-session-mocked] Calling Planner...
+2025-08-18 16:54:09,734 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:54:10,428 - INFO - [rag-test-session-mocked] Plan: {'files_to_create': ['adder.py'], 'plan': [{'step': 1, 'action': 'CREATE_FILE', 'file': 'adder.py', 'prompt': "Write a Python script named 'adder.py' that defines a function called 'add' that takes two numbers as input, returns their sum, and then calls the function with the numbers 5 and 10, printing the returned result."}]}
+2025-08-18 16:54:30,428 - INFO - [rag-test-session-mocked] Executing step: {'step': 1, 'action': 'CREATE_FILE', 'file': 'adder.py', 'prompt': "Write a Python script named 'adder.py' that defines a function called 'add' that takes two numbers as input, returns their sum, and then calls the function with the numbers 5 and 10, printing the returned result."}
+2025-08-18 16:54:51,228 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:54:51,714 - INFO - [rag-test-session-mocked] Calling Critic...
+2025-08-18 16:54:52,442 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:54:52,727 - INFO - [rag-test-session-mocked] Critic approved the code for adder.py.
+2025-08-18 16:55:32,729 - INFO - Build process started for session: rag-test-session-mocked
