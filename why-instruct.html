@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Definitive Solution for Malformed JSON Responses in LLM Systems</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: "Warm Neutrals" - A calming and professional palette using beige, slate, and subtle blues and greens to create a focused, readable experience. -->
+    <!-- Application Structure Plan: The SPA is designed as a top-down narrative journey, guiding the user from the high-level problem to the definitive solution. It starts with an 'Executive Summary' (The Goal), moves to a 'Solution Spectrum' where users can interactively compare reactive vs. proactive strategies (The Landscape), then presents the 'Definitive Solution' with a detailed, interactive architectural diagram (The Blueprint), and concludes with 'Production Hardening' steps (The Execution). This thematic, guided structure was chosen over a simple dashboard to make the complex technical argument more persuasive and easier to follow for decision-makers and developers alike. Key interactions include tabbed content for comparing libraries, a clickable diagram to reveal implementation details, and toggles for code examples. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Comparison of JSON handling strategies. -> Goal: Compare. -> Viz/Presentation: Interactive Bar Chart (Chart.js) and a detailed feature table. -> Interaction: Hovering over the chart bars highlights corresponding rows in the table, providing a direct visual link between quantitative scores and qualitative features. -> Justification: This dual-view allows users to quickly grasp the performance differences via the chart and then dive deep into the specific reasons via the table, enhancing comprehension. -> Library/Method: Chart.js for the bar chart; Tailwind CSS for the responsive table.
+        - Report Info: The proposed multi-layered defense architecture. -> Goal: Organize/Explain. -> Viz/Presentation: An interactive flowchart built with HTML/CSS. -> Interaction: Clicking on different layers of the diagram (e.g., "Pydantic Validation", "Instructor Orchestration") reveals a modal or adjacent text block with detailed explanations and code snippets. -> Justification: A static diagram would be overwhelming. Making it interactive allows users to explore the architecture at their own pace, focusing on one component at a time, which is crucial for understanding this complex system. -> Library/Method: HTML/Tailwind CSS.
+        - Report Info: Code examples for refactoring. -> Goal: Inform. -> Viz/Presentation: Side-by-side "Before" and "After" code blocks. -> Interaction: A toggle or tab allows users to switch between the old, problematic code and the new, robust implementation. -> Justification: This direct comparison is the most effective way to demonstrate the tangible benefits of the proposed solution in terms of code simplicity and reliability. -> Library/Method: HTML/Tailwind CSS.
+        - Report Info: Production best practices (model selection, routing). -> Goal: Inform/Organize. -> Viz/Presentation: Accordion-style collapsible sections. -> Interaction: Users can click to expand each best practice. -> Justification: This keeps the UI clean and prevents information overload, allowing users to focus on the specific operational details they are interested in. -> Library/Method: HTML/Tailwind CSS/Vanilla JS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8; /* Warm Neutral Background */
+            color: #4A4A4A;
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link.active, .nav-link:hover {
+            color: #3B82F6; /* Accent Blue */
+            border-bottom-color: #3B82F6;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .card {
+            background-color: #FFFFFF;
+            border: 1px solid #E5E7EB;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            background-color: #3B82F6;
+            color: white;
+        }
+        .code-block {
+            background-color: #2D3748;
+            color: #F7FAFC;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        .interactive-diagram-node {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .interactive-diagram-node:hover, .interactive-diagram-node.selected {
+            border-color: #3B82F6;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-xl font-bold text-gray-800">LLM JSON Reliability Blueprint</h1>
+                </div>
+                <nav class="hidden md:flex md:space-x-8">
+                    <a href="#summary" class="nav-link text-gray-600 font-medium pb-1 active">Summary</a>
+                    <a href="#spectrum" class="nav-link text-gray-600 font-medium pb-1">Solution Spectrum</a>
+                    <a href="#blueprint" class="nav-link text-gray-600 font-medium pb-1">The Blueprint</a>
+                    <a href="#production" class="nav-link text-gray-600 font-medium pb-1">Production Hardening</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+
+        <!-- Section 1: Executive Summary -->
+        <section id="summary" class="content-section active">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">Eliminating JSON Parsing Failures</h2>
+                <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">An architectural guide to building robust, production-grade multi-agent LLM systems that produce reliable, structured data every time.</p>
+            </div>
+            <div class="card p-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Core Recommendation: Proactive Enforcement</h3>
+                <p class="text-gray-700 leading-relaxed mb-6">
+                    This report concludes that reactive, post-generation JSON repair strategies are fundamentally inadequate for production systems. They address the symptoms (malformed strings) rather than the root cause (an uncontrolled generation process). The definitive solution is a paradigm shift to **proactive, generation-time enforcement**.
+                </p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-blue-50 p-6 rounded-lg border border-blue-200">
+                        <h4 class="font-bold text-lg text-blue-800 mb-2">Primary Solution: `Instructor` Library</h4>
+                        <p class="text-blue-700">Adopt the `Instructor` library to bind LLM outputs directly to Pydantic data models. This leverages native tool-calling capabilities of modern LLMs, transforming the process from "parsing a string" to "receiving a validated data object."</p>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-lg border border-green-200">
+                        <h4 class="font-bold text-lg text-green-800 mb-2">Complementary Strategy: Platform Best Practices</h4>
+                        <p class="text-green-700">Utilize OpenRouter's provider routing to enforce model capabilities and strategically select models with proven support for structured outputs. This ensures the reliability of the `Instructor`-based architecture.</p>
+                    </div>
+                </div>
+                <p class="mt-6 text-gray-700 leading-relaxed">
+                    Implementing this multi-layered defense strategy will virtually eliminate `json.JSONDecodeError` exceptions, significantly reduce HTTP 500 errors, and establish a scalable, resilient foundation for your AI Coder Agent system.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 2: Solution Spectrum -->
+        <section id="spectrum" class="content-section">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">The Spectrum of Solutions</h2>
+                <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">From brittle, reactive fixes to resilient, proactive architectural patterns. Understanding the trade-offs is key to building a robust system.</p>
+            </div>
+            <div class="card p-6 md:p-8 mb-8">
+                <h3 class="text-xl font-bold text-center mb-6">Strategy Comparison: Robustness vs. Implementation Effort</h3>
+                <div class="chart-container">
+                    <canvas id="strategyChart"></canvas>
+                </div>
+            </div>
+            <div class="card p-6 md:p-8">
+                 <div class="flex justify-center space-x-2 md:space-x-4 mb-6 border-b pb-4">
+                    <button class="tab-button text-sm md:text-base font-medium py-2 px-4 rounded-full active" data-target="tab-repair">Reactive Repair</button>
+                    <button class="tab-button text-sm md:text-base font-medium py-2 px-4 rounded-full" data-target="tab-self-correct">Self-Correction Loop</button>
+                    <button class="tab-button text-sm md:text-base font-medium py-2 px-4 rounded-full" data-target="tab-proactive">Proactive Enforcement</button>
+                </div>
+                <div id="tab-content">
+                    <div id="tab-repair" class="tab-pane active">
+                        <h4 class="text-2xl font-bold mb-3">Reactive Strategy: Post-Hoc Repair</h4>
+                        <p class="mb-4 text-gray-600">This approach attempts to "fix" the broken JSON string after it's generated. While simple, it's heuristic-based and not guaranteed to work, especially for complex errors.</p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="border p-4 rounded-lg">
+                                <h5 class="font-semibold text-lg">`json_repair` Library</h5>
+                                <p class="text-sm text-gray-600">Specifically designed to fix common LLM JSON errors. It's better than basic string slicing but cannot reliably infer intent for major structural flaws.</p>
+                                <span class="inline-block mt-2 bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">Limitation: Not Guaranteed</span>
+                            </div>
+                             <div class="border p-4 rounded-lg">
+                                <h5 class="font-semibold text-lg">`dirtyjson` Library</h5>
+                                <p class="text-sm text-gray-600">Designed for parsing JS objects, not fixing LLM output. Its own documentation warns against use in reliable environments and its AGPL license is a risk for commercial use.</p>
+                                <span class="inline-block mt-2 bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">Limitation: Unsuitable for Production</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-self-correct" class="tab-pane hidden">
+                        <h4 class="text-2xl font-bold mb-3">Resilience Pattern: LLM Self-Correction</h4>
+                        <p class="mb-4 text-gray-600">Leverages the LLM's own intelligence. If parsing fails, the malformed string and error message are sent back to the LLM with a prompt to fix it.</p>
+                         <div class="grid md:grid-cols-2 gap-4">
+                            <div class="border p-4 rounded-lg">
+                                <h5 class="font-semibold text-lg">Advantages</h5>
+                                <p class="text-sm text-gray-600">More powerful than static libraries; can fix more complex errors by understanding the context of the error message.</p>
+                            </div>
+                             <div class="border p-4 rounded-lg">
+                                <h5 class="font-semibold text-lg">Disadvantages</h5>
+                                <p class="text-sm text-gray-600">Increases latency and cost by requiring a second API call. The correction is also not guaranteed. Best used as a last resort, not a primary strategy.</p>
+                                <span class="inline-block mt-2 bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">Limitation: High Overhead</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-proactive" class="tab-pane hidden">
+                        <h4 class="text-2xl font-bold mb-3">Proactive Strategy: Generation-Time Enforcement</h4>
+                        <p class="mb-4 text-gray-600">The most robust approach. It prevents bad JSON from being generated by using model-native features to enforce a schema during the inference process.</p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="border p-4 rounded-lg">
+                                <h5 class="font-semibold text-lg">Model-Level Guarantees</h5>
+                                <p class="text-sm text-gray-600">Modern LLMs support "JSON Mode" or "Tool Calling," which constrains the output to a specified JSON schema, guaranteeing both syntactic validity and structural adherence.</p>
+                            </div>
+                             <div class="border p-4 rounded-lg">
+                                <h5 class="font-semibold text-lg">Framework Orchestration: `Instructor`</h5>
+                                <p class="text-sm text-gray-600">`Instructor` bridges the gap by converting Pydantic models into the required JSON Schema, managing the API call, validating the response, and returning a typed object. It eliminates manual parsing entirely.</p>
+                                <span class="inline-block mt-2 bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">Recommendation: Definitive Solution</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: The Blueprint -->
+        <section id="blueprint" class="content-section">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">The Definitive Solution Blueprint</h2>
+                <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">A multi-layered defense architecture centered on `Instructor` for proactive, schema-driven generation and validation.</p>
+            </div>
+            
+            <div class="card p-6 md:p-8 mb-8">
+                <h3 class="text-2xl font-bold text-center mb-6">Interactive Architecture: Click a Layer to Learn More</h3>
+                <div class="w-full overflow-x-auto p-4">
+                    <div class="flex flex-col items-center space-y-4 text-center">
+                        <div id="diag-app" class="interactive-diagram-node bg-gray-100 p-4 rounded-lg shadow w-64">
+                            <h4 class="font-bold">Application Layer</h4>
+                            <p class="text-sm">Agent Logic (e.g., Planner)</p>
+                        </div>
+                        <div class="text-2xl text-gray-400">↓</div>
+                        <div id="diag-instructor" class="interactive-diagram-node bg-blue-100 p-4 rounded-lg shadow w-72 border-2 border-blue-300">
+                            <h4 class="font-bold text-blue-800">`Instructor` Orchestration</h4>
+                            <p class="text-sm text-blue-700">Patches client, handles retries, validates response</p>
+                        </div>
+                        <div class="text-2xl text-gray-400">↓</div>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <div id="diag-pydantic" class="interactive-diagram-node bg-green-100 p-4 rounded-lg shadow w-64">
+                                <h4 class="font-bold text-green-800">Pydantic Schema</h4>
+                                <p class="text-sm text-green-700">Defines data contract & validation rules</p>
+                            </div>
+                            <div id="diag-client" class="interactive-diagram-node bg-purple-100 p-4 rounded-lg shadow w-64">
+                                <h4 class="font-bold text-purple-800">Patched LLM Client</h4>
+                                <p class="text-sm text-purple-700">Injects schema into API call</p>
+                            </div>
+                        </div>
+                        <div class="text-2xl text-gray-400">↓</div>
+                        <div id="diag-llm" class="interactive-diagram-node bg-orange-100 p-4 rounded-lg shadow w-72">
+                            <h4 class="font-bold text-orange-800">LLM with Tool Calling</h4>
+                            <p class="text-sm text-orange-700">Generates schema-adherent JSON</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="diagram-details" class="mt-8 p-6 bg-gray-50 rounded-lg border min-h-[100px]">
+                    <p class="text-gray-500 italic">Select a component from the diagram above to see details.</p>
+                </div>
+            </div>
+
+            <div class="card p-6 md:p-8">
+                <h3 class="text-2xl font-bold mb-4 text-center">Refactoring in Practice: Before & After</h3>
+                <p class="text-center text-gray-600 mb-6">See how `Instructor` simplifies the Planner agent, eliminating fragile parsing logic and replacing it with a single, reliable call.</p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2 text-red-600">Before: Brittle Parsing</h4>
+                        <div class="code-block text-sm">
+def generate_plan(prompt: str) -> dict:
+    response_text = client.chat.completions.create(...)
+    
+    # Error-prone manual parsing
+    try:
+        start = response_text.find('{')
+        end = response_text.rfind('}') + 1
+        json_string = response_text[start:end]
+        return json.loads(json_string)
+    except Exception as e:
+        # Leads to HTTP 500 error
+        raise ValueError("Failed to parse")
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2 text-green-600">After: Robust Generation</h4>
+                        <div class="code-block text-sm">
+# Assumes 'patched_client' and 'BuildPlan' Pydantic model
+def generate_plan(prompt: str) -> BuildPlan:
+    # Directly returns a validated Pydantic object.
+    # No parsing needed. Handles errors & retries.
+    return patched_client.chat.completions.create(
+        model="anthropic/claude-3.5-sonnet",
+        response_model=BuildPlan,
+        max_retries=3,
+        messages=[...]
+    )
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Production Hardening -->
+        <section id="production" class="content-section">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">Production Hardening</h2>
+                <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">Operational best practices to ensure reliability and performance on the OpenRouter platform.</p>
+            </div>
+            <div class="space-y-8">
+                <div class="card p-6 md:p-8">
+                    <h3 class="text-2xl font-bold mb-4">1. Strategic Model Selection</h3>
+                    <p class="text-gray-600 mb-4">The entire architecture depends on the LLM's ability to handle structured outputs. Always verify model capabilities on OpenRouter. Do not assume support.</p>
+                    <div class="bg-gray-50 p-4 rounded-lg border">
+                        <h4 class="font-semibold">Recommended Models:</h4>
+                        <ul class="list-disc list-inside text-gray-700 mt-2 space-y-1">
+                            <li><span class="font-semibold text-gray-800">Anthropic Claude 3.5 Sonnet:</span> Excellent for complex tool use.</li>
+                            <li><span class="font-semibold text-gray-800">OpenAI GPT-4o:</span> First-class, guaranteed support.</li>
+                            <li><span class="font-semibold text-gray-800">Qwen & DeepSeek Models:</span> Strong open-source alternatives.</li>
+                        </ul>
+                    </div>
+                </div>
+                 <div class="card p-6 md:p-8">
+                    <h3 class="text-2xl font-bold mb-4">2. Enforce Capabilities with Provider Routing</h3>
+                    <p class="text-gray-600 mb-4">A critical, non-obvious step. OpenRouter may route requests to different backend providers for the same model. Some providers might not have tool-calling enabled, causing sporadic failures. You must enforce this capability.</p>
+                    <div class="code-block text-sm">
+build_plan = patched_client.chat.completions.create(
+    model="anthropic/claude-3.5-sonnet",
+    response_model=BuildPlan,
+    max_retries=3,
+    # This is ESSENTIAL for production reliability on OpenRouter
+    extra_body={"provider": {"require_parameters": True}}
+)
+                    </div>
+                     <p class="mt-4 text-sm text-gray-600">Setting `require_parameters: True` instructs OpenRouter to only use backend providers that explicitly support all parameters in your request (i.e., tool calling / response_format), eliminating a major source of production instability.</p>
+                </div>
+                 <div class="card p-6 md:p-8">
+                    <h3 class="text-2xl font-bold mb-4">3. Final Error Handling & Observability</h3>
+                    <p class="text-gray-600 mb-4">Even with retries, a request might ultimately fail. The system must handle this gracefully instead of returning a generic 500 error.</p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li><span class="font-semibold">Catch `InstructorRetryException`:</span> This is the final exception raised by `Instructor` after all retries fail.</li>
+                        <li><span class="font-semibold">Log Detailed Diagnostics:</span> The exception object contains the full history of prompts, responses, and validation errors. Log this for debugging.</li>
+                        <li><span class="font-semibold">Return Informative HTTP Status:</span> Send a 503 Service Unavailable or 422 Unprocessable Entity to the frontend.</li>
+                        <li><span class="font-semibold">Integrate Observability:</span> Use tools like Langfuse to trace and debug the entire LLM chain, turning it from a black box into a transparent system.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.content-section');
+
+            const setActiveLink = (hash) => {
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === hash);
+                });
+                sections.forEach(section => {
+                    section.classList.toggle('active', `#${section.id}` === hash);
+                });
+            };
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    window.location.hash = targetId;
+                });
+            });
+
+            window.addEventListener('hashchange', () => {
+                const hash = window.location.hash || '#summary';
+                setActiveLink(hash);
+            });
+            
+            // Initial load
+            const initialHash = window.location.hash || '#summary';
+            setActiveLink(initialHash);
+
+            // Tab functionality for Solution Spectrum
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const targetId = this.dataset.target;
+                    tabPanes.forEach(pane => {
+                        pane.classList.toggle('hidden', pane.id !== targetId);
+                        pane.classList.toggle('active', pane.id === targetId);
+                    });
+                });
+            });
+            
+            // Interactive Diagram Logic
+            const diagramNodes = document.querySelectorAll('.interactive-diagram-node');
+            const detailsPane = document.getElementById('diagram-details');
+            const diagramDetailsContent = {
+                'diag-app': {
+                    title: 'Application Layer',
+                    text: 'This is where your core business logic resides. An agent, like the "Planner," receives a task and needs to generate a structured output (e.g., a build plan). In the old architecture, this layer was responsible for the fragile task of parsing a raw string from the LLM.'
+                },
+                'diag-instructor': {
+                    title: '`Instructor` Orchestration',
+                    text: '`Instructor` acts as the intelligent middleware. It patches your LLM client to add the `response_model` parameter. It orchestrates the entire process: converting the Pydantic model to a JSON schema, managing the API call, validating the returned data, and handling the self-correction retry loop if validation fails.'
+                },
+                'diag-pydantic': {
+                    title: 'Pydantic Schema',
+                    text: 'This is the source of truth for your data structure. By defining a Pydantic model, you create an unambiguous, machine-readable contract. The model\'s field descriptions are passed to the LLM to guide generation, and its validators can enforce complex business logic, triggering the self-correction loop on failure.'
+                },
+                'diag-client': {
+                    title: 'Patched LLM Client',
+                    text: 'After being patched by `Instructor`, the standard OpenAI client is enhanced. When you make a call with `response_model`, the client automatically injects the generated JSON schema into the API request, telling the LLM the exact format required for the response.'
+                },
+                'diag-llm': {
+                    title: 'LLM with Tool Calling',
+                    text: 'The modern Large Language Model. When it receives a request with a JSON schema (via its tool-calling or structured output feature), it is constrained to generate a response that is not only syntactically valid JSON but also strictly adheres to the provided schema. This is the core of the generation-time guarantee.'
+                }
+            };
+
+            diagramNodes.forEach(node => {
+                node.addEventListener('click', () => {
+                    diagramNodes.forEach(n => n.classList.remove('selected'));
+                    node.classList.add('selected');
+                    const content = diagramDetailsContent[node.id];
+                    detailsPane.innerHTML = `<h4 class="font-bold text-lg mb-2">${content.title}</h4><p class="text-gray-700">${content.text}</p>`;
+                });
+            });
+
+
+            // Chart.js implementation
+            const ctx = document.getElementById('strategyChart');
+            if (ctx) {
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Basic Parsing', 'Post-Hoc Repair (`json_repair`)', 'LLM Self-Correction', '`Instructor` Enforcement'],
+                        datasets: [{
+                            label: 'Robustness Score (out of 10)',
+                            data: [1, 5, 7, 9.5],
+                            backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                            borderColor: 'rgba(59, 130, 246, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Ease of Implementation (out of 10)',
+                            data: [8, 7, 4, 9],
+                            backgroundColor: 'rgba(16, 185, 129, 0.5)',
+                            borderColor: 'rgba(16, 185, 129, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 10,
+                                grid: {
+                                    color: '#E5E7EB'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                            },
+                            title: {
+                                display: true,
+                                text: 'JSON Handling Strategy Evaluation'
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
