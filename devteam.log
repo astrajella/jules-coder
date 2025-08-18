@@ -1,0 +1,77 @@
+2025-08-18 16:06:30,507 - INFO - Received build request: {'prompt': 'create a python script that prints hello world'}
+2025-08-18 16:06:30,512 - INFO - [default] Starting build for: create a python script that prints hello world
+2025-08-18 16:06:30,512 - INFO - [default] Calling Supervisor...
+2025-08-18 16:06:31,748 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:06:31,876 - INFO - [default] Refined goal: Create a Python script that prints 'Hello World'.
+2025-08-18 16:06:31,876 - INFO - [default] Calling Planner...
+2025-08-18 16:06:32,485 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+2025-08-18 16:06:32,488 - ERROR - Error in start_build: Error code: 400 - {'error': {'message': 'qwen/qwen2-72b-instruct is not a valid model ID', 'code': 400}, 'user_id': 'user_2qX1F4P0jyEhwtt8jLroNhn6gGc'}
+Traceback (most recent call last):
+  File "/app/server.py", line 36, in start_build
+    await orch.run(prompt)
+  File "/app/devteam/orchestrator.py", line 35, in run
+    plan = planner.run(
+           ^^^^^^^^^^^^
+  File "/app/devteam/agents/planner.py", line 11, in run
+    response = client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/openai/_utils/_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py", line 1150, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/openai/_base_client.py", line 1259, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.11/lib/python3.12/site-packages/openai/_base_client.py", line 1047, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen2-72b-instruct is not a valid model ID', 'code': 400}, 'user_id': 'user_2qX1F4P0jyEhwtt8jLroNhn6gGc'}
+2025-08-18 16:07:21,485 - INFO - Received build request: {'prompt': 'create a python script that prints hello world'}
+2025-08-18 16:07:21,493 - INFO - [default] Starting build for: create a python script that prints hello world
+2025-08-18 16:07:21,493 - INFO - [default] Calling Supervisor...
+2025-08-18 16:07:22,512 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:07:22,899 - INFO - [default] Refined goal: Create a Python script that outputs 'Hello, World!' when executed.
+2025-08-18 16:07:22,899 - INFO - [default] Calling Planner...
+2025-08-18 16:07:23,453 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:07:24,076 - INFO - [default] Plan: {'files_to_create': ['hello.py'], 'plan': [{'step': 1, 'action': 'CREATE_FILE', 'file': 'hello.py', 'prompt': "print('Hello, World!')"}]}
+2025-08-18 16:07:24,076 - INFO - [default] Executing step: {'step': 1, 'action': 'CREATE_FILE', 'file': 'hello.py', 'prompt': "print('Hello, World!')"}
+2025-08-18 16:07:25,052 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:07:25,224 - INFO - [default] Updated hello.py
+2025-08-18 16:07:25,224 - INFO - Build process started for session: default
+2025-08-18 16:10:29,536 - INFO - Received build request: {'prompt': "create a file named 'test.txt' with the content 'hello'", 'session': 'test-session'}
+2025-08-18 16:10:29,540 - INFO - [test-session] Starting build for: create a file named 'test.txt' with the content 'hello'
+2025-08-18 16:10:29,540 - INFO - [test-session] Calling Supervisor...
+2025-08-18 16:10:30,437 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:10:30,734 - INFO - [test-session] Refined goal: Create a file with specified name and content.
+2025-08-18 16:10:30,735 - INFO - [test-session] Calling Planner...
+2025-08-18 16:10:31,167 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:10:31,758 - INFO - [test-session] Plan: {'files_to_create': ['file_with_specified_name_and_content.txt'], 'plan': [{'step': 1, 'action': 'CREATE_FILE', 'file': 'file_with_specified_name_and_content.txt', 'prompt': "Create a file named 'file_with_specified_name_and_content.txt' and populate it with the content you want."}]}
+2025-08-18 16:10:31,759 - INFO - [test-session] Executing step: {'step': 1, 'action': 'CREATE_FILE', 'file': 'file_with_specified_name_and_content.txt', 'prompt': "Create a file named 'file_with_specified_name_and_content.txt' and populate it with the content you want."}
+2025-08-18 16:10:32,847 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:10:33,564 - INFO - [test-session] Updated file_with_specified_name_and_content.txt
+2025-08-18 16:10:33,564 - INFO - Build process started for session: test-session
+2025-08-18 16:11:52,052 - INFO - Received build request: {'prompt': "create a file named 'test.txt' with the content 'hello'", 'session': 'test-session'}
+2025-08-18 16:11:52,056 - INFO - [test-session] Starting build for: create a file named 'test.txt' with the content 'hello'
+2025-08-18 16:11:52,056 - INFO - [test-session] Calling Supervisor...
+2025-08-18 16:11:53,092 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:11:53,496 - INFO - [test-session] Refined goal: Create a file with specified name and content.
+2025-08-18 16:11:53,497 - INFO - [test-session] Calling Planner...
+2025-08-18 16:11:53,967 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:11:54,522 - INFO - [test-session] Plan: {'files_to_create': ['my_file.txt'], 'plan': [{'step': 1, 'action': 'CREATE_FILE', 'file': 'my_file.txt', 'prompt': 'Create a new file named my_file.txt with the following content:\nThis is the content of my_file.txt'}]}
+2025-08-18 16:11:54,523 - INFO - [test-session] Executing step: {'step': 1, 'action': 'CREATE_FILE', 'file': 'my_file.txt', 'prompt': 'Create a new file named my_file.txt with the following content:\nThis is the content of my_file.txt'}
+2025-08-18 16:11:55,019 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:11:55,360 - INFO - [test-session] Updated my_file.txt
+2025-08-18 16:11:55,360 - INFO - Build process started for session: test-session
+2025-08-18 16:13:08,029 - INFO - Received build request: {'prompt': "create a file named 'test.txt' with the content 'hello'", 'session': 'test-session'}
+2025-08-18 16:13:08,034 - INFO - [test-session] Starting build for: create a file named 'test.txt' with the content 'hello'
+2025-08-18 16:13:08,034 - INFO - [test-session] Calling Supervisor...
+2025-08-18 16:13:09,112 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:13:09,565 - INFO - [test-session] Refined goal: Create a text file named 'test.txt' containing the word 'hello'.
+2025-08-18 16:13:09,565 - INFO - [test-session] Calling Planner...
+2025-08-18 16:13:10,115 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:13:10,482 - INFO - [test-session] Plan: {'files_to_create': ['test.txt'], 'plan': [{'step': 1, 'action': 'CREATE_FILE', 'file': 'test.txt', 'prompt': "Write the word 'hello' into the file"}]}
+2025-08-18 16:13:10,482 - INFO - [test-session] Executing step: {'step': 1, 'action': 'CREATE_FILE', 'file': 'test.txt', 'prompt': "Write the word 'hello' into the file"}
+2025-08-18 16:13:11,172 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-18 16:13:11,321 - INFO - [test-session] Updated test.txt
+2025-08-18 16:13:11,322 - INFO - Build process started for session: test-session

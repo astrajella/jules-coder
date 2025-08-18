@@ -1,0 +1,15 @@
+roles:
+  supervisor: openai/gpt-4o
+  planner: google/gemini-flash-1.5
+  coder: openai/gpt-4o
+  critic: claude-3-haiku-20240307
+  debugger: qwen/qwen2-72b-instruct
+  context: deepseek/deepseek-chat
+
+fallbacks:
+  supervisor: deepseek/deepseek-chat
+  planner: deepseek/deepseek-chat
+  coder: openai/gpt-4o
+  critic: claude-3-haiku-20240307
+  debugger: deepseek/deepseek-chat
+  context: qwen/qwen2-72b-instruct
