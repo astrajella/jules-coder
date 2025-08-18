@@ -2,14 +2,12 @@ roles:
   supervisor: openai/gpt-4o
   planner: google/gemini-flash-1.5
   coder: openai/gpt-4o
-  critic: claude-3-haiku-20240307
-  debugger: qwen/qwen2-72b-instruct
-  context: deepseek/deepseek-chat
+  critic: google/gemini-flash-1.5
+  context: google/gemini-flash-1.5
 
 fallbacks:
-  supervisor: deepseek/deepseek-chat
-  planner: deepseek/deepseek-chat
-  coder: openai/gpt-4o
-  critic: claude-3-haiku-20240307
-  debugger: deepseek/deepseek-chat
-  context: qwen/qwen2-72b-instruct
+  supervisor: google/gemini-flash-1.5
+  planner: google/gemini-flash-1.5
+  coder: google/gemini-flash-1.5
+  critic: google/gemini-flash-1.5
+  context: google/gemini-flash-1.5

@@ -7,9 +7,9 @@ client = OpenAI(
     api_key=os.getenv("OPENROUTER_API_KEY"),
 )
 
-def run(prompt: str, system_prompt: str, model: str, file_path: str, current_content: str) -> str:
+def run(prompt: str, system_prompt: str, model: str, file_path: str, current_content: str, context: str) -> str:
 
-    user_prompt = f"File: {file_path}\nRequest: {prompt}\n"
+    user_prompt = f"File: {file_path}\nRequest: {prompt}\n\nRelevant context:\n{context}\n"
     if current_content:
         user_prompt += f"\nHere is the current content of the file:\n```\n{current_content}\n```"
 
@@ -20,7 +20,7 @@ def run(prompt: str, system_prompt: str, model: str, file_path: str, current_con
             {"role": "user", "content": user_prompt},
         ],
         response_format={"type": "json_object"},
-        max_tokens=4096, # Coder needs a lot of tokens
+        max_tokens=2048,
     )
     content = response.choices[0].message.content
     return json.loads(content).get("content", "")

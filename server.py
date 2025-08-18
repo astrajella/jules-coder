@@ -1,5 +1,6 @@
 import uvicorn
 from dotenv import load_dotenv
+import os
 load_dotenv()
 from fastapi import FastAPI, HTTPException, Body
 from fastapi.staticfiles import StaticFiles
@@ -29,7 +30,8 @@ async def start_build(request: dict = Body(...)):
         session_id = request.get("session", "default")
 
         # Create a new orchestrator for the session
-        orch = Orchestrator(session_id)
+        voyage_api_key = os.getenv("VOYAGE_API_KEY")
+        orch = Orchestrator(session_id, voyage_api_key)
         sessions[session_id] = orch
 
         # Start the build process in the background
