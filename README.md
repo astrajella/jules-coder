@@ -52,3 +52,21 @@ This project is a full-stack application that uses a team of AI agents to genera
   - `agents/`: Contains the individual AI agent logic.
   - `web/ui/dist/`: Contains the frontend HTML, CSS, and JavaScript files.
 - `devteam.log`: The log file for the backend server.
+
+## RAG Implementation
+
+This application uses a Retrieval-Augmented Generation (RAG) system to provide context to the AI agents. This allows the agents to make more informed decisions and generate better code.
+
+Here's how it works:
+
+1.  **Conversation History:** As the agents work, every significant action (e.g., refining the goal, creating a plan, writing code, criticizing code) is stored in a `ConversationHistory` object.
+
+2.  **Vector Embeddings:** Each entry in the history is sent to the Voyage AI API, which converts the text into a numerical vector embedding using the `voyage-3.5` model. These embeddings represent the semantic meaning of the text.
+
+3.  **Contextual Retrieval:** Before an agent (like the Planner or Coder) is called, the Orchestrator formulates a query based on the current task. This query is also converted into a vector embedding.
+
+4.  **Semantic Search:** The Orchestrator then performs a cosine similarity search between the query vector and all the vectors in the conversation history. This finds the historical entries that are most semantically similar to the current task.
+
+5.  **Prompt Augmentation:** The top 3 most relevant historical entries are then formatted and inserted into the prompt that is sent to the agent. This provides the agent with the most relevant context, without overwhelming it with the entire conversation history.
+
+This RAG system makes the AI agent team more efficient and effective, as it allows them to "remember" previous steps and build upon them.
